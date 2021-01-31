@@ -36,6 +36,24 @@ window.$ = window.jQuery = function (selectorOrArrayOrTemplate) {
 jQuery.fn = jQuery.prototype = { //两个等号，从右往左执行
   constructor: jQuery,
   jquery: true,
+  on(eventType, selector, fn){ //委托函数
+    let element = this.get(0)
+    if(!(element instanceof Element)){
+      element = document.querySelector(element)
+    }
+    element.addEventListener(eventType, e=>{
+      let t = e.target
+      while(!(t.matches(selector))){
+        if (element === t) {
+          t = null
+          break
+        }
+        t = t.parentNode
+      }
+      t && fn.call(t, e, t)
+    })
+    return this
+  },
   get(index) {
     // console.log(this.elements[1])
     return this.elements[index]
@@ -113,4 +131,5 @@ jQuery.fn = jQuery.prototype = { //两个等号，从右往左执行
   end() {
     return this.oldApi; //this是新api, 原因，预测是新api调用这个函数
   }
+
 }

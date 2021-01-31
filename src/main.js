@@ -34,6 +34,10 @@ console.log(c instanceof HTMLCollection) //false
 console.log(d instanceof HTMLCollection) //true
 $('.test').append(d) // b: HTMLCollection
 
+$("#div1").on('click', "button", ()=>{
+    console.log("点击了span")
+})
+
 
 
 
